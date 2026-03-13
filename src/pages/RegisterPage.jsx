@@ -9,7 +9,7 @@ export default function RegisterPage() {
     fullName: '',
     email: '',
     password: '',
-    roles: ['BUYER'],
+    roles: [],
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
