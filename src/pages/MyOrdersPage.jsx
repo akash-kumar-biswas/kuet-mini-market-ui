@@ -101,7 +101,7 @@ export default function MyOrdersPage() {
                   </table>
                 )}
                 {order.status === 'PLACED' && (
-                  <div style={{ padding: '12px 0 4px' }}>
+                  <div className="order-inline-actions">
                     <button
                       className="btn btn-danger btn-sm"
                       disabled={actionLoading === order.id}

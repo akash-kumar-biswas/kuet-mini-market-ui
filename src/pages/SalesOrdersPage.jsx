@@ -127,7 +127,7 @@ export default function SalesOrdersPage() {
                   </table>
                 )}
                 {order.status === 'PLACED' && (
-                  <div style={{ display: 'flex', gap: 8, padding: '12px 0 4px' }}>
+                  <div className="order-inline-actions">
                     <button
                       className="btn btn-success btn-sm"
                       disabled={actionLoading === order.id + '-complete'}

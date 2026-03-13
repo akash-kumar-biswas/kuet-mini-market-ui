@@ -79,7 +79,7 @@ export default function MyProductsPage() {
                     <td>
                       <Link to={`/products/${p.id}`} style={{ fontWeight: 600 }}>{p.title}</Link>
                       {p.description && (
-                        <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: 2, maxWidth: 260, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <div className="product-table-desc">
                           {p.description}
                         </div>
                       )}
@@ -88,7 +88,7 @@ export default function MyProductsPage() {
                     <td>{p.stock}</td>
                     <td><span className={`badge ${status.cls}`}>{status.label}</span></td>
                     <td>
-                      <div style={{ display: 'flex', gap: 8 }}>
+                      <div className="table-actions">
                         <Link to={`/products/${p.id}/edit`} className="btn btn-outline btn-sm">Edit</Link>
                         <button className="btn btn-danger btn-sm" onClick={() => handleDelete(p.id)}>Delete</button>
                       </div>

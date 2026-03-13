@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 
@@ -6,50 +7,66 @@ export default function Navbar() {
   const { user, logout, hasRole } = useAuth()
   const { itemCount } = useCart()
   const navigate = useNavigate()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleLogout = () => {
     logout()
+    setIsMenuOpen(false)
     navigate('/login')
+  }
+
+  const handleNavLinkClick = () => {
+    setIsMenuOpen(false)
   }
 
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/products">🛍️ KUET Mini Market</Link>
+        <Link to="/products" onClick={handleNavLinkClick}>KUET Mini Market</Link>
       </div>
 
-      <div className="navbar-links">
-        <Link to="/products">Products</Link>
+      <button
+        type="button"
+        className="navbar-toggle"
+        onClick={() => setIsMenuOpen((prev) => !prev)}
+        aria-label="Toggle navigation"
+        aria-expanded={isMenuOpen}
+      >
+        {isMenuOpen ? 'x' : '='}
+      </button>
+
+      <div className={`navbar-links ${isMenuOpen ? 'navbar-links-open' : ''}`}>
+        <Link to="/products" onClick={handleNavLinkClick}>Products</Link>
 
         {!user && (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register" className="btn btn-primary btn-sm" style={{ background: 'var(--primary)', color: '#fff', borderColor: 'var(--primary)' }}>Register</Link>
+            <Link to="/login" onClick={handleNavLinkClick}>Login</Link>
+            <Link to="/register" onClick={handleNavLinkClick} className="btn btn-primary btn-sm" style={{ background: 'var(--primary)', color: '#fff', borderColor: 'var(--primary)' }}>Register</Link>
           </>
         )}
 
         {user && hasRole('SELLER') && (
           <>
-            <Link to="/my-products">My Products</Link>
-            <Link to="/products/new">+ Add Product</Link>
-            <Link to="/orders/sales">Sales</Link>
+            <Link to="/my-products" onClick={handleNavLinkClick}>My Products</Link>
+            <Link to="/products/new" onClick={handleNavLinkClick}>+ Add Product</Link>
+            <Link to="/orders/sales" onClick={handleNavLinkClick}>Sales</Link>
           </>
         )}
 
         {user && hasRole('BUYER') && (
           <>
-            <Link to="/cart" className="cart-link">
+            <Link to="/cart" onClick={handleNavLinkClick} className="cart-link">
               Cart
               {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}
             </Link>
-            <Link to="/orders/my">My Orders</Link>
+            <Link to="/orders/my" onClick={handleNavLinkClick}>My Orders</Link>
           </>
         )}
 
         {user && hasRole('ADMIN') && (
           <>
-            <Link to="/orders/all">All Orders</Link>
-            <Link to="/admin/users">Users</Link>
+            <Link to="/orders/all" onClick={handleNavLinkClick}>All Orders</Link>
+            <Link to="/admin/users" onClick={handleNavLinkClick}>Users</Link>
           </>
         )}
 
